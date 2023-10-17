@@ -38,7 +38,7 @@ y_end = 1
 while(cap.isOpened()):
     ret, frame = cap.read()
     
-    for i in range(row_nodes):
+    for i in range(y_end):
         for j in range(col_nodes):
             amplitude, angle = strength(i, j, x_beg, y_beg, x_end, y_end, 20, 40)
             displacement[0][i][j] = -amplitude * np.cos(angle)
@@ -50,7 +50,7 @@ while(cap.isOpened()):
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break    
     
-    y_end += np.sqrt(3)
+    y_end += 1
     x_end += 1
     
 
