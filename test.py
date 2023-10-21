@@ -14,7 +14,7 @@ def strength(x, y, x_beg, y_beg, x_end, y_end, coef, sigma):
         angle = np.arctan((x_beg - x) / (y_beg - y))
     return (amplitude, angle)
 
-img = plt.imread("/mnt/c/dl/frame_0.png")
+img = plt.imread("/mnt/c/Users/sammy/Desktop/Bmode.jpg")
 rows, cols = img.shape[0], img.shape[1]
 
 rows, cols = 256, 256
