@@ -8,16 +8,27 @@ def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 30, coef = 20, sig
     b = y_end - a * x_end
     distance = np.abs(a * x - y + b) / np.sqrt(a ** 2 + 1)
     
+    _a = -1 / a
+    _b = y_end - _a * x_end
+
     amplitude, angle = 0, 0
-    if y_end < y or y_beg == y:
+    if (_a * x + _b) < y or y_beg == y:
         return (amplitude, angle)
     
-    needle_width = 2
-    if distance != needle_width:
+    """
+    needle_width = 3
+    angle = np.arctan((x_beg - x) / (y_beg - y))
+    if distance > needle_width:
         distance -= needle_width
         amplitude = strength / (distance ** 2)
-        angle = np.arctan((x_beg - x) / (y_beg - y))
-        
+        amplitude = min(amplitude, 6)
+    else:
+        amplitude = 6
+    """
+
+    if distance != 0:
+        amplitude = strength / (distance ** 2)
+
     return (amplitude, angle)
 
 def post_deform(img_deformed, img, x, y, x_beg, y_beg, x_end, y_end, strength = 30):
@@ -34,7 +45,7 @@ def post_deform(img_deformed, img, x, y, x_beg, y_beg, x_end, y_end, strength = 
         
     return (amplitude, angle)
 
-img = plt.imread("/mnt/c/dl/frame_0.png")
+img = plt.imread("/mnt/c/Users/sammy/Desktop/frame_0.png")
 
 if len(img) > 2:
     img = img.mean(axis = 2)
