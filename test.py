@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import elasticdeform
 
-def deform_field(x, y, x_beg, y_beg, x_end, y_end, coef = 20, sigma = 20):
+def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 30, coef = 20, sigma = 20):
     a = (y_end - y_beg) / (x_end - x_beg)
     b = y_end - a * x_end
     distance = np.abs(a * x - y + b) / np.sqrt(a ** 2 + 1)
@@ -11,8 +11,8 @@ def deform_field(x, y, x_beg, y_beg, x_end, y_end, coef = 20, sigma = 20):
     if y_end < y or y_beg == y:
         return (amplitude, angle)
     
-    if distance != 0:
-        amplitude = 20 / (distance ** 2)
+    if distance != 0 and distance != 0:
+        amplitude = strength / (distance ** 1.5)
         angle = np.arctan((x_beg - x) / (y_beg - y))
         
     return (amplitude, angle)
@@ -20,7 +20,7 @@ def deform_field(x, y, x_beg, y_beg, x_end, y_end, coef = 20, sigma = 20):
 img = plt.imread("/mnt/c/dl/frame_0.png")
 rows, cols = img.shape[0], img.shape[1]
 
-rows, cols = 512, 512
+rows, cols = 1024, 1024
 X = np.zeros((rows, cols))
 X[::10, ::10] = 1
 

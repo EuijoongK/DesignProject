@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import elasticdeform
 import cv2
 
-def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 15, coef = 20, sigma = 20):
+def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 30, coef = 20, sigma = 20):
     a = (y_end - y_beg) / (x_end - x_beg)
     b = y_end - a * x_end
     distance = np.abs(a * x - y + b) / np.sqrt(a ** 2 + 1)
@@ -12,9 +12,25 @@ def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 15, coef = 20, sig
     if y_end < y or y_beg == y:
         return (amplitude, angle)
     
-    if distance != 0:
+    needle_width = 2
+    if distance != needle_width:
+        distance -= needle_width
         amplitude = strength / (distance ** 2)
         angle = np.arctan((x_beg - x) / (y_beg - y))
+        
+    return (amplitude, angle)
+
+def post_deform(img_deformed, img, x, y, x_beg, y_beg, x_end, y_end, strength = 30):
+    a = (y_end - y_beg) / (x_end - x_beg)
+    b = y_end - a * x_end
+    distance = np.abs(a * x - y + b) / np.sqrt(a ** 2 + 1)
+
+    if y_end < y or y_beg == y:
+        return
+    
+    needle_width = 2
+    if distance == needle_width:
+        img_deformed[y][x] = img[y - int(strength * np.sin(angle))][x - int(strength * np.cos(angle))]
         
     return (amplitude, angle)
 
@@ -24,7 +40,6 @@ if len(img) > 2:
     img = img.mean(axis = 2)
     
 rows, cols = img.shape[0], img.shape[1]
-
 displacement = np.zeros([2, rows, cols])
 
 x_beg = 200
@@ -42,15 +57,16 @@ for i in range(rows):
 img_deformed = elasticdeform.deform_grid(img, displacement,
                                          axis = (0, 1))
 
+"""
 for i in range(rows):
     for j in range(cols):
-        if img_deformed[i][j] == 0:
-            img_deformed[i][j] = img[i][j]
-
+        post_deform(img_deformed, img, j, i, x_beg, y_beg, x_end, y_end)
+"""
 
 plt.figure()
 plt.imshow(img, cmap = 'gray')
 
 plt.figure()
 plt.imshow(img_deformed, cmap = 'gray')
+plt.clim(img.min(), img.max())
 plt.show()
