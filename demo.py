@@ -12,7 +12,13 @@ def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 30, coef = 20, sig
     _b = y_end - _a * x_end
 
     amplitude, angle = 0, 0
-    if (_a * x + _b) < y or y_beg == y:
+    if (_a * x + _b) < y:
+        if distance != 0:
+            amplitude = strength / (distance ** 2)
+        if y_end != y:
+            angle = np.arctan((x_end - x) / (y_end - y))
+        else:
+            angle = np.arctan((x_end - x_beg) / (y_end -y_beg))
         return (amplitude, angle)
     
     """
@@ -25,7 +31,7 @@ def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 30, coef = 20, sig
     else:
         amplitude = 6
     """
-
+    angle = np.arctan((x_end - x_beg) / (y_end - y_beg))
     if distance != 0:
         amplitude = strength / (distance ** 2)
 
