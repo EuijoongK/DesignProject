@@ -6,49 +6,19 @@ import cv2
 def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 30, coef = 20, sigma = 20):
     a = (y_end - y_beg) / (x_end - x_beg)
     b = y_end - a * x_end
-    distance = np.abs(a * x - y + b) / np.sqrt(a ** 2 + 1)
-    
     _a = -1 / a
     _b = y_end - _a * x_end
 
+    distance = np.abs(a * x - y + b) / np.sqrt(a ** 2 + 1)
     amplitude, angle = 0, 0
+
     if (_a * x + _b) < y:
-        if distance != 0:
-            amplitude = strength / (distance ** 2)
-        if y_end != y:
-            angle = np.arctan((x_end - x) / (y_end - y))
-        else:
-            angle = np.arctan((x_end - x_beg) / (y_end -y_beg))
         return (amplitude, angle)
-    
-    """
-    needle_width = 3
-    angle = np.arctan((x_beg - x) / (y_beg - y))
-    if distance > needle_width:
-        distance -= needle_width
-        amplitude = strength / (distance ** 2)
-        amplitude = min(amplitude, 6)
-    else:
-        amplitude = 6
-    """
+
     angle = np.arctan((x_end - x_beg) / (y_end - y_beg))
     if distance != 0:
         amplitude = strength / (distance ** 2)
 
-    return (amplitude, angle)
-
-def post_deform(img_deformed, img, x, y, x_beg, y_beg, x_end, y_end, strength = 30):
-    a = (y_end - y_beg) / (x_end - x_beg)
-    b = y_end - a * x_end
-    distance = np.abs(a * x - y + b) / np.sqrt(a ** 2 + 1)
-
-    if y_end < y or y_beg == y:
-        return
-    
-    needle_width = 2
-    if distance == needle_width:
-        img_deformed[y][x] = img[y - int(strength * np.sin(angle))][x - int(strength * np.cos(angle))]
-        
     return (amplitude, angle)
 
 img = plt.imread("/mnt/c/Users/sammy/Desktop/frame_0.png")
@@ -73,12 +43,6 @@ for i in range(rows):
     
 img_deformed = elasticdeform.deform_grid(img, displacement,
                                          axis = (0, 1))
-
-"""
-for i in range(rows):
-    for j in range(cols):
-        post_deform(img_deformed, img, j, i, x_beg, y_beg, x_end, y_end)
-"""
 
 plt.figure()
 plt.imshow(img, cmap = 'gray')
