@@ -3,7 +3,10 @@ import matplotlib.pyplot as plt
 import elasticdeform
 import cv2
 
-def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 30, coef = 20, sigma = 20):
+def gaussian(x, mean, sigma):
+    return (1 / np.sqrt(2 * np.pi * sigma ** 2)) * np.exp(-(x - mean) ** 2 / (2 * sigma ** 2))
+
+def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 40, coef = 20, sigma = 20):
     a = (y_end - y_beg) / (x_end - x_beg)
     b = y_end - a * x_end
     _a = -1 / a
@@ -15,13 +18,12 @@ def deform_field(x, y, x_beg, y_beg, x_end, y_end, strength = 30, coef = 20, sig
     if (_a * x + _b) < y:
         return (amplitude, angle)
 
-    angle = np.arctan((x_end - x_beg) / (y_end - y_beg))
-    if distance != 0:
-        amplitude = strength / (distance ** 2)
-
+    angle = np.arctan((x_beg - x_end) / (y_beg - y_end))
+    amplitude = gaussian(distance, 0, 2) * strength
+    
     return (amplitude, angle)
 
-img = plt.imread("/mnt/c/Users/sammy/Desktop/frame_0.png")
+img = plt.imread("/mnt/c/dl/frame_0.png")
 
 if len(img) > 2:
     img = img.mean(axis = 2)
@@ -30,7 +32,7 @@ rows, cols = img.shape[0], img.shape[1]
 displacement = np.zeros([2, rows, cols])
 
 x_beg = 200
-y_beg = 10
+y_beg = -1
 x_end = 300
 y_end = 200
 
@@ -50,4 +52,5 @@ plt.imshow(img, cmap = 'gray')
 plt.figure()
 plt.imshow(img_deformed, cmap = 'gray')
 plt.clim(img.min(), img.max())
+
 plt.show()
