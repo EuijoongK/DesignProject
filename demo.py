@@ -56,22 +56,30 @@ if len(img) > 2:
     img = img.mean(axis = 2)
     
 rows, cols = img.shape[0], img.shape[1]
+X = np.zeros([rows, cols])
+X[::5, ::5] = 1
 
 x_beg = 200
 y_beg = -1
 x_end = 300
-y_end = 200
+y_end = 170
 
 displacement = deformation_field(rows, cols, x_beg, x_end, y_beg, y_end)
 img_deformed = elasticdeform.deform_grid(img, displacement,
                                          axis = (0, 1))
+X_deformed = elasticdeform.deform_grid(X, displacement, axis = (0, 1))
 
-"""
 plt.figure()
 plt.imshow(img, cmap = 'gray')
-"""
+
 plt.figure()
 plt.imshow(img_deformed, cmap = 'gray')
 plt.clim(img.min(), img.max())
+
+plt.figure()
+plt.imshow(X)
+
+plt.figure()
+plt.imshow(X_deformed)
 
 plt.show()
