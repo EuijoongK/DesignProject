@@ -9,13 +9,17 @@ def shear(distance, pressure):
     amplitude = pressure * (0.9 ** distance)
     return amplitude
 
+def compress(distance, pressure, depth):
+    amplitude = shear(distance, pressure * (0.95 ** depth))
+    return amplitude
+
 def compression(distance, pressure, L = 5):
     distance = (L / 2) - distance
     amplitude = 0
     if distance > (L / 2):
         amplitude = 0
     elif distance >= 0:
-        amplitude = (1 / (12 * L)) * distance ** 4 - 1 / 12  * distance ** 3 + 5 / 96 * L **2 * distance
+        amplitude = (1 / (12 * L)) * distance ** 4 - 1 / 12  * distance ** 3 + 5 / 96 * L ** 2 * distance
     return -pressure * amplitude / 10
 
 def deformation_field(rows, cols, x_beg, x_end, y_beg, y_end, pressure = 30, sigma = 20):
@@ -34,6 +38,8 @@ def deformation_field(rows, cols, x_beg, x_end, y_beg, y_end, pressure = 30, sig
 
             if _a * j + _b < i:
                 #amplitude = -compression(distance, pressure)
+                depth = np.abs(_a * j - i + _b) / np.sqrt(_a ** 2 + 1)
+                amplitude = compress(distance, pressure, depth)
                 angle = needle_angle
             else:
                 angle = needle_angle
