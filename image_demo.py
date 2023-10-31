@@ -1,6 +1,6 @@
 from elastic import *
 
-img = plt.imread("/mnt/c/dl/frame_0.png")
+img = plt.imread("/mnt/c/Users/sammy/Desktop/frame_0.png")
 
 if len(img) > 2:
     img = img.mean(axis = 2)   

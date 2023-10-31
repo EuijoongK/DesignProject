@@ -2,7 +2,8 @@ from elastic import *
 import cv2
 import os
  
-path = '/mnt/c/opencv/sources/samples/data'
+#path = '/mnt/c/opencv/sources/samples/data'
+path = '/opencv/opencv/samples/data'
 filePath = os.path.join(path, "vtest.avi")
 cap = cv2.VideoCapture(filePath)
     
@@ -31,9 +32,11 @@ while True:
     
     displacement = deformation_field(frameHeight, frameWidth, x_beg, x_end, y_beg, y_end)
     _frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    """
     frame_deformed = elasticdeform.deform_grid(_frame, displacement,
-                                         axis = (0, 1))
-    cv2.imshow('test', frame_deformed)
+                                        axis = (0, 1))
+    """
+    cv2.imshow('test', _frame)
     key = cv2.waitKey(frameRate)
     if key == 27:
         break
