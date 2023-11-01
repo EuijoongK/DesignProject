@@ -38,7 +38,7 @@ def deformation_field(rows, cols, x_beg, x_end, y_beg, y_end, pressure = 30):
         b = y_end - a * x_end
         _a = -1 / a
         _b = y_end - _a * x_end
-        needle_angle = np.arctan(1 / a)
+        needle_angle = np.arctan(a)
     
     for i in range(rows):
         for j in range(cols):
@@ -68,8 +68,8 @@ def deformation_field(rows, cols, x_beg, x_end, y_beg, y_end, pressure = 30):
                 #for shear zone
                 else:
                     amplitude = shear(distance, pressure)        
-            
-            displacement[0][i][j] = -amplitude * np.cos(angle)
-            displacement[1][i][j] = -amplitude * np.sin(angle)
+
+            displacement[0][i][j] = -amplitude * np.sin(angle)
+            displacement[1][i][j] = -amplitude * np.cos(angle)
 
     return displacement

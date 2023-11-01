@@ -1,6 +1,6 @@
 from elastic import *
 
-img = plt.imread("/mnt/c/Users/sammy/Desktop/frame_0.png")
+img = plt.imread("/mnt/c/dl/frame_0.png")
 
 if len(img) > 2:
     img = img.mean(axis = 2)   
@@ -11,7 +11,7 @@ rows, cols = img.shape[0], img.shape[1]
 x_beg = 200
 y_beg = -1
 #needle tip position
-x_end = 200
+x_end = 250
 y_end = 170
 
 displacement = deformation_field(rows, cols, x_beg, x_end, y_beg, y_end)

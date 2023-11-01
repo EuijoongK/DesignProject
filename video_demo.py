@@ -2,8 +2,8 @@ from elastic import *
 import cv2
 import os
  
-#path = '/mnt/c/opencv/sources/samples/data'
-path = '/opencv/opencv/samples/data'
+path = '/mnt/c/opencv/sources/samples/data'
+#path = '/opencv/opencv/samples/data'
 filePath = os.path.join(path, "vtest.avi")
 cap = cv2.VideoCapture(filePath)
     
@@ -21,7 +21,7 @@ x_dst = 250
 y_dst = 170
 
 velocity = 1
-needle_angle = np.arctan((x_dst - x_beg) / (y_dst / y_beg))
+needle_angle = np.arctan((y_dst - y_beg) / (x_dst - x_beg))
 
 frameRate = 33
 
@@ -32,17 +32,17 @@ while True:
     
     displacement = deformation_field(frameHeight, frameWidth, x_beg, x_end, y_beg, y_end)
     _frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    """
+
     frame_deformed = elasticdeform.deform_grid(_frame, displacement,
                                         axis = (0, 1))
-    """
-    cv2.imshow('test', _frame)
+
+    cv2.imshow('test', frame_deformed)
     key = cv2.waitKey(frameRate)
     if key == 27:
         break
     if x_end != x_dst:
-        x_end += (velocity * np.sin(needle_angle))
-        y_end += (velocity * np.cos(needle_angle))
+        x_end += (velocity * np.cos(needle_angle))
+        y_end += (velocity * np.sin(needle_angle))
     
 if cap.isOpened():
     cap.release()
