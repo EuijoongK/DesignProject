@@ -2,8 +2,8 @@ from elastic import *
 import cv2
 import os
  
-path = '/mnt/c/opencv/sources/samples/data'
-#path = '/opencv/opencv/samples/data'
+#path = '/mnt/c/opencv/sources/samples/data'
+path = '/opencv/opencv/samples/data'
 filePath = os.path.join(path, "vtest.avi")
 cap = cv2.VideoCapture(filePath)
     
