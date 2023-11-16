@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import elasticdeform
 
 def gaussian(x, mean, sigma):
