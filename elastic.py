@@ -67,8 +67,10 @@ def deformation_field(rows, cols, x_beg, x_end, y_beg, y_end, pressure = 30):
                 #for shear zone
                 else:
                     amplitude = shear(distance, pressure)        
-
-            displacement[0][i][j] = -amplitude * np.sin(angle)
+            if x_beg < x_end:
+                displacement[0][i][j] = -amplitude * np.sin(angle)
+            else:
+                displacement[0][i][j] = amplitude * np.sin(angle)
             displacement[1][i][j] = -amplitude * np.cos(angle)
 
     return displacement

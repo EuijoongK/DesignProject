@@ -2,8 +2,6 @@ import numpy as np
 from elastic import *
 
 def trajectory(img, x_beg, x_end, y_beg, y_end):
-    if len(img) > 2:
-        img = img.mean(axis = 2)
     rows, cols = img.shape[0], img.shape[1]
     result = np.zeros([rows, cols])
     
@@ -47,8 +45,6 @@ def trajectory(img, x_beg, x_end, y_beg, y_end):
     
     
 def vector_field(img, x_beg, x_end, y_beg, y_end):
-    if len(img) > 2:
-        img = img.mean(axis = 2)
     rows, cols = img.shape[0], img.shape[1]
     displacement = deformation_field(rows, cols, x_beg, x_end, y_beg, y_end)
     uniform = np.zeros([rows, cols])
