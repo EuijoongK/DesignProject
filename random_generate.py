@@ -11,7 +11,7 @@ plt.imshow(img, cmap = 'gray')
 rows, cols = img.shape[0], img.shape[1]
 
 x_beg = int(rows / 2)
-y_beg = -1
+y_beg = 100
 
 needle_angle = (np.random.rand() - 0.5) * np.pi / 2
 needle_length = np.random.rand() * 100 + 50
