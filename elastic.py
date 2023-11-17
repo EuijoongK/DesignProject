@@ -13,7 +13,7 @@ def shear(distance, pressure, ratio = 0.9, needle_width = 2):
     return amplitude
 
 #compression
-def compress(distance, pressure, depth, ratio_shear = 0.9, ratio_compress = 0.9):
+def compress(distance, pressure, depth, ratio_shear = 0.85, ratio_compress = 0.9):
     amplitude = shear(distance, pressure * (ratio_compress ** depth), ratio_shear)
     return amplitude
 

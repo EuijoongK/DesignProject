@@ -1,2 +1,5 @@
 x_beg : 184 y_beg : -1
-x_end : 185.28671963436312 y_end : 81.11299356432556
+x_end : 237.88430276916847 y_end : 137.74759674247372
+
+ratio_shear = 0.9, ratio_compress = 0.9'
+pressure = 30
