@@ -3,7 +3,7 @@ from elastic import *
 
 def trajectory(img, x_beg, x_end, y_beg, y_end):
     rows, cols = img.shape[0], img.shape[1]
-    result = np.zeros([rows, cols])
+    result = np.zeros([rows, cols], dtype = np.uint8)
     
     a, b, _a, _b = 0, 0, 0, 0
     needle_angle = 0.0
@@ -33,13 +33,13 @@ def trajectory(img, x_beg, x_end, y_beg, y_end):
                 #for compression zone
                 if _a * j + _b > i:
                     if distance <= 1:
-                        result[i][j] = 1
+                        result[i][j] = 255
             #when needle inserted vertically
             else:
                 #for compression zone
                 if i < y_end:
                     if distance <= 1:
-                        result[i][j] = 1
+                        result[i][j] = 255
     
     return result
     
@@ -47,7 +47,7 @@ def trajectory(img, x_beg, x_end, y_beg, y_end):
 def vector_field(img, x_beg, x_end, y_beg, y_end):
     rows, cols = img.shape[0], img.shape[1]
     displacement = deformation_field(rows, cols, x_beg, x_end, y_beg, y_end)
-    uniform = np.zeros([rows, cols])
-    uniform[::5, ::5] = 1
+    uniform = np.zeros([rows, cols], dtype = np.uint8)
+    uniform[::5, ::5] = 255
     result = elasticdeform.deform_grid(uniform, displacement, axis = (0, 1))
     return result

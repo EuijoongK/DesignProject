@@ -5,7 +5,7 @@ def gaussian(x, mean, sigma):
     return (1 / np.sqrt(2 * np.pi * sigma ** 2)) * np.exp(-(x - mean) ** 2 / (2 * sigma ** 2))
 
 #shear transform
-def shear(distance, pressure, ratio = 0.9, needle_width = 2):
+def shear(distance, pressure, ratio = 0.9, needle_width = 1.5):
     amplitude = pressure
     if distance > needle_width:
         distance -= needle_width
@@ -13,11 +13,11 @@ def shear(distance, pressure, ratio = 0.9, needle_width = 2):
     return amplitude
 
 #compression
-def compress(distance, pressure, depth, ratio_shear = 0.85, ratio_compress = 0.9):
+def compress(distance, pressure, depth, ratio_shear = 0.9, ratio_compress = 0.9):
     amplitude = shear(distance, pressure * (ratio_compress ** depth), ratio_shear)
     return amplitude
 
-def deformation_field(rows, cols, x_beg, x_end, y_beg, y_end, pressure = 30):
+def deformation_field(rows, cols, x_beg, x_end, y_beg, y_end, pressure = 20):
     
     """
     when needle inserted with angle
