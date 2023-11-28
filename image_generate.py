@@ -6,11 +6,11 @@ from PIL import Image
 
 import os
 
-input_directory = '/mnt/c/Users/Sammy/Desktop/png_files'
-deform_directory = '/mnt/c/Users/Sammy/Desktop/deform'
-gt_directory = '/mnt/c/Users/Sammy/Desktop/gt'
+input_directory = '/mnt/c/Users/MICS/Desktop/test_input'
+deform_directory = '/mnt/c/Users/MICS/Desktop/test_deform'
+gt_directory = '/mnt/c/Users/MICS/Desktop/test_gt'
 
-img = plt.imread("/mnt/c/Users/Sammy/Desktop/png_files/0.png")
+img = plt.imread("/mnt/c/Users/MICS/Desktop/png_files/0.png")
 rows, cols = img.shape[0], img.shape[1]
 x_beg = int(rows / 2)
 y_beg = -1
@@ -28,12 +28,12 @@ for png_file in png_files:
     input_image = np.array(input_image, dtype = np.uint8)
 
     needle_angle = (np.random.rand() - 0.5) * np.pi / 3
-    needle_length = np.random.rand() * 150 + 50
+    needle_length = np.random.rand() * 150 + 10
 
     x_end = x_beg + needle_length * np.sin(needle_angle)
     y_end = y_beg + needle_length * np.cos(needle_angle)
 
-    displacement = deformation_field(rows, cols, x_beg, x_end, y_beg, y_end, 35)
+    displacement = deformation_field(rows, cols, x_beg, x_end, y_beg, y_end, 10)
     img_deformed = elasticdeform.deform_grid(input_image, displacement, order = 1)
     img_gt = trajectory(input_image, x_beg, x_end, y_beg, y_end)
 
