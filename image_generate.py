@@ -10,6 +10,8 @@ input_directory = '/mnt/c/Users/MICS/Desktop/test_input'
 deform_directory = '/mnt/c/Users/MICS/Desktop/test_deform'
 gt_directory = '/mnt/c/Users/MICS/Desktop/test_gt'
 
+txt_file_path = '/mnt/c/Users/MICS/Desktop/info.txt'
+
 img = plt.imread("/mnt/c/Users/MICS/Desktop/png_files/0.png")
 rows, cols = img.shape[0], img.shape[1]
 x_beg = int(rows / 2)
@@ -50,3 +52,11 @@ for png_file in png_files:
 
     img_deformed.save(deform_file_path, format='PNG')
     img_gt.save(gt_file_path, format = 'PNG')
+    
+    with open(txt_file_path, "a") as file:
+        file.write(f"{png_file}")
+        file.write(f"Needle tip x : {x_end}")
+        file.write(f"Needle tip y : {y_end}")
+        file.write(f"Needle length : {needle_length}")
+        file.write(f"Needle angle : {needle_angle}")
+        file.write("\n")
