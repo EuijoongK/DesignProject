@@ -6,15 +6,15 @@ from PIL import Image
 
 import os
 
-input_directory = '/mnt/c/Users/MICS/Desktop/test_input'
-deform_directory = '/mnt/c/Users/MICS/Desktop/test_deform'
-gt_directory = '/mnt/c/Users/MICS/Desktop/test_gt'
+input_directory = '/mnt/c/Users/sammy/Desktop/test_input'
+deform_directory = '/mnt/c/Users/sammy/Desktop/test_deform'
+gt_directory = '/mnt/c/Users/sammy/Desktop/test_gt'
 
-txt_file_path = '/mnt/c/Users/MICS/Desktop/info.txt'
+txt_file_path = '/mnt/c/Users/sammy/Desktop/info.txt'
 
-img = plt.imread("/mnt/c/Users/MICS/Desktop/png_files/0.png")
+img = plt.imread("/mnt/c/Users/sammy/Desktop/test_input/160.png")
 rows, cols = img.shape[0], img.shape[1]
-x_beg = int(rows / 2)
+x_beg = int(cols / 2)
 y_beg = -1
 
 png_files = [file for file in os.listdir(input_directory) if file.endswith(".png")]
@@ -54,9 +54,9 @@ for png_file in png_files:
     img_gt.save(gt_file_path, format = 'PNG')
     
     with open(txt_file_path, "a") as file:
-        file.write(f"{png_file}")
-        file.write(f"Needle tip x : {x_end}")
-        file.write(f"Needle tip y : {y_end}")
-        file.write(f"Needle length : {needle_length}")
-        file.write(f"Needle angle : {needle_angle}")
+        file.write(f"{png_file}\n")
+        file.write(f"Needle tip x : {x_end}\n")
+        file.write(f"Needle tip y : {y_end}\n")
+        file.write(f"Needle length : {needle_length}\n")
+        file.write(f"Needle angle : {needle_angle}\n")
         file.write("\n")
